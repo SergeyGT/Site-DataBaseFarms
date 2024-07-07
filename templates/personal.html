@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <title>Personal List</title>
+      <style>
+        .animated {
+            transition: transform 0.2s ease-in-out;
+        }
+        .animated:hover {
+            transform: scale(1.05);
+        }
+          .filter-container {
+            position: absolute;
+            top: 20px; /* Регулируйте по необходимости */
+            right: 20px; /* Регулируйте по необходимости */
+        }
+    </style>
+  </head>
+  <body>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="alert">
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+    <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+      <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+    </a>
+
+    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+      <li><a href="/personal" class="nav-link px-2 link-secondary">Персонал</a></li>
+      <li><a href="/info_farms" class="nav-link px-2 link-body-emphasis">Наши фермы</a></li>
+      <li><a href="/" class="nav-link px-2 link-body-emphasis">Главная</a></li>
+    </ul>
+</div>
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div class="filter-container">
+                <select id="cityFilter" class="form-control animated" onchange="filterByCity()">
+                    <option value="">Все города</option>
+                    <option value="Волгоград">Волгоград</option>
+                    <option value="Moscow city">Moscow city</option>
+                    <option value="Sochi">Сочи</option>
+                    <option value="Krasnodarskiy kray">Krasnodarskiy kray</option>
+                </select>
+            </div>
+        </div>
+
+
+  <div class="container mt-5">
+    <h1 class="text-center">Personal List</h1>
+
+      <div class="alert alert-info">
+
+
+
+        <div class="row">
+            {% for person in personal_list %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ person.fio }}</h2>
+                            <p class="card-text">Должность: {{ person.post }}</p>
+                            <p><strong>Место работы:</strong> <span class="highlight">{{ person.farm.location }}</span></p>
+                            <div class="d-flex justify-content-between mb-3">
+
+                                <a href="/personal/{{person.idpersonal}}" class="btn btn-danger btn-animation">Удаление работника</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+  <script>
+        function filterByCity() {
+            var city = document.getElementById('cityFilter').value;
+            window.location.href = '/filter_personal?city=' + city;
+        }
+    </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {% block body %} {% endblock %}
+  </body>
+</html>

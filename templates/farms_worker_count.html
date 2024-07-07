@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Количество работников на каждой ферме</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .card-custom {
+            transition: transform 0.2s ease-in-out;
+        }
+        .card-custom:hover {
+            transform: scale(1.05);
+            color: #0ABAB5;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Количество работников на каждой ферме</h1>
+        <div class="row">
+            {% for location, count in farm_worker_counts.items() %}
+                <div class="col-md-4 mb-4">
+                    <div class="card card-custom">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ location }}</h2>
+                            <p class="card-text">Количество работников: {{ count }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
